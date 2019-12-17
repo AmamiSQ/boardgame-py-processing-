@@ -1,0 +1,57 @@
+add_library("sound")
+import First, Second, Third, Fourth, random, SpinningWheel
+
+def setup():
+    global sf, playlist, testt, scene
+    size(800, 800)
+    menu_img = loadImage("game_menu.png")
+    
+    scene = None
+    
+    sf = SoundFile(this, "metroid-musictitle-youtubemp3free.org.mp3")
+    sf.play()
+    sf.loop()
+    
+    background(0);
+    image(menu_img,0,0)
+    
+    mouseCursor = loadImage("gaming-cursor-png-5.png")
+    cursor(mouseCursor)
+
+def keyPressed():
+     if scene != None:
+         scene.keyPressed()
+         return
+
+def draw():
+    global mouseCursor,main_img, text_img, wrong_img, right_img, hint_1, hint_2, hint_3, sf, playlist, scene
+
+    if scene != None:
+        scene.draw()
+        return
+    
+    if mousePressed:
+        if (mouseX >= 414 and mouseX <= 545) and (mouseY >= 685 and mouseY <= 799):
+            print("A") #leaderboard
+            
+        if (mouseX >= 545 and mouseX <= 660) and (mouseY >= 619 and mouseY <= 778):
+            wheel = SpinningWheel
+            wheel.setup()
+            
+            scene = wheel
+            
+        if (mouseX >= 647 and mouseX <= 734) and (mouseY >= 551 and mouseY <= 668):
+            print("C") #cards
+            
+            
+        if (mouseX >= 700 and mouseX <= 786) and (mouseY >= 422 and mouseY <= 531):
+            playlist = [First, Second, Third, Fourth]
+            test = random.choice(playlist)
+            test.setup()
+            
+            scene = test
+            
+            sf.stop()
+            sf1 = SoundFile(this, "Professor Layton and the Last Specter - Puzzle.mp3")
+            sf1.play()
+            sf1.loop()
